@@ -1,9 +1,15 @@
-export const addCheck = (squares, type, position) => ({
+export const addCheck = (squares, location) => ({
   type: 'ADD_CHECK',
   payload: {
     squares,
-    type,
-    position
+    location
+  }
+});
+
+export const changeHistory = history => ({
+  type: 'CHANGE_HISTORY',
+  payload: {
+    history
   }
 });
 
@@ -14,19 +20,21 @@ export const changeStepNumber = stepNumber => ({
   }
 });
 
-export const setWin = () => ({
+export const setWin = win => ({
   type: 'SETWIN',
-  payload: {}
-});
-
-export const setXIsNext = () => ({
-  type: 'SETISNEXT',
-  payload: {}
-});
-
-export const sort = isAscending => ({
-  type: 'SORT',
   payload: {
-    isAscending
+    win
   }
+});
+
+export const setXIsNext = xIsNext => ({
+  type: 'SETISNEXT',
+  payload: {
+    xIsNext
+  }
+});
+
+export const sort = () => ({
+  type: 'SORT',
+  payload: {}
 });

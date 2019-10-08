@@ -1,5 +1,6 @@
-const initialState = true;
-const changeStepNumber = (state = initialState, action) => {
+const initialState = 0;
+
+const stepNumber = (state = initialState, action) => {
   switch (action.type) {
     case 'CHANGE_STEPNUMBER':
       return action.payload.stepNumber;
@@ -7,5 +8,4 @@ const changeStepNumber = (state = initialState, action) => {
       return state;
   }
 };
-
-export default changeStepNumber;
+export default stepNumber;

@@ -1,11 +1,12 @@
 const initialState = null;
-const win = (state = initialState, action) => {
+
+const setWin = (state = initialState, action) => {
   switch (action.type) {
     case 'SETWIN':
-      return !state;
+      return action.payload.win;
     default:
       return state;
   }
 };
 
-export default win;
+export default setWin;

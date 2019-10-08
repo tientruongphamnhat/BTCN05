@@ -1,10 +1,10 @@
 const initialState = [
   {
     squares: Array(400).fill(null),
-    type: null,
-    location: -1
+    location: null
   }
 ];
+
 const history = (state = initialState, action) => {
   switch (action.type) {
     case 'ADD_CHECK':
@@ -12,10 +12,11 @@ const history = (state = initialState, action) => {
         ...state,
         {
           squares: action.payload.squares,
-          type: action.payload.type,
-          pos: action.payload.position
+          location: action.payload.location
         }
       ];
+    case 'CHANGE_HISTORY':
+      return action.payload.history;
     default:
       return state;
   }

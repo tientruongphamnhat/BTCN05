@@ -2,6 +2,7 @@ import { connect } from 'react-redux';
 import Game from '../components/Game';
 
 import {
+  changeHistory,
   addCheck,
   changeStepNumber,
   setXIsNext,
@@ -13,17 +14,17 @@ const mapStateToProps = state => ({
   history: state.history,
   stepNumber: state.stepNumber,
   xIsNext: state.xIsNext,
-  win: state.win,
-  isAscending: state.isAscending
+  win: state.setWin,
+  isAscending: state.sort
 });
 
 const mapDispatchToProps = dispatch => ({
-  addCheck: (squares, type, position) =>
-    dispatch(addCheck(squares, type, position)),
   changeStepNumber: stepNumber => dispatch(changeStepNumber(stepNumber)),
-  setWin: () => dispatch(setWin),
-  sort: () => dispatch(sort),
-  setXIsNext: () => dispatch(setXIsNext)
+  addCheck: (squares, localtion) => dispatch(addCheck(squares, localtion)),
+  changeHistory: history => dispatch(changeHistory(history)),
+  setWin: win => dispatch(setWin(win)),
+  sort: () => dispatch(sort()),
+  setXIsNext: xIsNext => dispatch(setXIsNext(xIsNext))
 });
 
 export default connect(

@@ -1,14 +1,14 @@
 import { combineReducers } from 'redux';
 import history from './history';
 import sort from './sort';
-import changeStepNumber from './step';
-import win from './win';
+import stepNumber from './step';
+import setWin from './win';
 import xIsNext from './xIsNext';
 
 export default combineReducers({
+  stepNumber,
   history,
   sort,
-  changeStepNumber,
-  win,
+  setWin,
   xIsNext
 });

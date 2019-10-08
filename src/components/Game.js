@@ -161,24 +161,18 @@ function calculateWinner(squares, i) {
 }
 
 class Game extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      history: [
-        {
-          squares: Array(400).fill(null),
-          location: null
-        }
-      ],
-      stepNumber: 0,
-      xIsNext: true,
-      win: null,
-      isAscending: true
-    };
-  }
-
   handleClick(i) {
-    const { history, stepNumber, win, xIsNext } = this.state;
+    const {
+      history,
+      stepNumber,
+      win,
+      xIsNext,
+      addCheck,
+      setWin,
+      changeStepNumber,
+      setXIsNext,
+      changeHistory
+    } = this.props;
     const history1 = history.slice(0, stepNumber + 1);
     const current = history1[history1.length - 1];
     const squares = current.squares.slice();
@@ -187,52 +181,78 @@ class Game extends React.Component {
       return;
     }
 
+    if (stepNumber < history.length) {
+      changeHistory(history1);
+    }
+
     squares[i] = xIsNext ? 'X' : 'O';
-    this.setState({
-      history: history1.concat([
-        {
-          squares: squares.slice(),
-          location: i
-        }
-      ]),
-      stepNumber: history1.length,
-      xIsNext: !xIsNext
-    });
+    // this.setState({
+    //   history: history1.concat([
+    //     {
+    //       squares: squares.slice(),
+    //       location: i
+    //     }
+    //   ]),
+    //   stepNumber: history1.length,
+    //   xIsNext: !xIsNext
+    // });
+
+    addCheck(squares, i);
+    changeStepNumber(history1.length);
+    setXIsNext(!xIsNext);
 
     const iswin = calculateWinner(squares, i);
 
     if (iswin) {
-      this.setState({
-        win: iswin
-      });
+      // this.setState({
+      //   win: iswin
+      // });
+      setWin(iswin);
     }
   }
 
   jumpTo(step) {
-    const { stepNumber } = this.state;
+    const {
+      stepNumber,
+      changeStepNumber,
+      setXIsNext,
+      setWin,
+      history
+    } = this.props;
+    if (step === history.length - 1) {
+      changeStepNumber(step);
+      const iswin = calculateWinner(
+        history[step].squares,
+        history[step].location
+      );
+      setWin(iswin);
+      return;
+    }
     if (step !== stepNumber) {
-      this.setState({
-        stepNumber: step,
-        xIsNext: step % 2 === 0,
-        win: null
-      });
-      if (step === 0) {
-        this.setState({
-          win: null
-        });
-      }
+      // console.log(step);
+      // console.log('----------');
+      // console.log(stepNumber);
+      // this.setState({
+      //   stepNumber: step,
+      //   xIsNext: step % 2 === 0,
+      //   win: null
+      // });
+      changeStepNumber(step);
+      setXIsNext(step % 2 === 0);
+      setWin(null);
     }
   }
 
   sortHistory() {
-    const { isAscending } = this.state;
-    this.setState({
-      isAscending: !isAscending
-    });
+    const { sort } = this.props;
+    // this.setState({
+    //   isAscending: !isAscending
+    // });
+    sort();
   }
 
   render() {
-    const { history, stepNumber, win, xIsNext, isAscending } = this.state;
+    const { history, stepNumber, win, xIsNext, isAscending } = this.props;
     const current = history[stepNumber];
 
     const moves = history.map((step, move) => {
